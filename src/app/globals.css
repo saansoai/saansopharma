@@ -1,0 +1,963 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Saanso Pharma — design tokens
+
+   The site sits on powder blue, not on white and not on navy. Ink is a TYPE
+   colour only: no section may take a dark surface. Life comes from a warm
+   azure accent that carries every figure, CTA, active state and hover —
+   powder blue alone reads clinical, and the warm is what stops it.
+
+   Palette is still derived from the logo: the powder ramp is the logo's light
+   blue opened up, the brand ramp is its deeper blue kept for type and links.
+   ========================================================================== */
+
+@theme {
+  /* Ink — headings and body copy. Never a background. */
+  --color-ink-950: #06202f;
+  --color-ink-900: #0d2c3f;
+  --color-ink-800: #163b51;
+  --color-ink-700: #27536b;
+  --color-ink-600: #3d6d86;
+
+  /* Powder — the ground the whole page sits on */
+  --color-powder-50: #f6fbfe;
+  --color-powder-100: #eaf5fc;
+  --color-powder-200: #d8ebf8;
+  --color-powder-300: #bfdcf1;
+  --color-powder-400: #9dc8e8;
+  --color-powder-500: #74afda;
+
+  /* Brand blue — from the logo swoosh. Type, links, quiet emphasis. */
+  --color-brand-50: #eff7fc;
+  --color-brand-100: #d9edf8;
+  --color-brand-200: #b4dbf1;
+  --color-brand-300: #7fc2e6;
+  --color-brand-400: #4aa6d7;
+  --color-brand-500: #2a86bf;
+  --color-brand-600: #1f6ba1;
+  --color-brand-700: #1c5683;
+  --color-brand-800: #1c486d;
+  --color-brand-900: #1b3d5c;
+
+  /* Azure — the live accent. A vivid cyan-blue, deliberately a long way from
+     both the pale powder ground and the deep brand blue, so it still reads as
+     "this is the active bit" without introducing a second hue to the palette.
+     Every CTA, figure, active state and hover lands here. */
+  --color-accent-50: #edfaff;
+  --color-accent-100: #d3f2ff;
+  --color-accent-200: #a8e6ff;
+  --color-accent-300: #6fd3f8;
+  --color-accent-400: #2fb9e9;
+  --color-accent-500: #0d9dd2;
+  --color-accent-600: #067daf;
+  --color-accent-700: #0a6389;
+
+  /* Paper — the white end of the ramp, for cards and quiet sections */
+  --color-paper-50: #ffffff;
+  --color-paper-100: #f7fbfe;
+  --color-paper-200: #eaf2f8;
+  --color-paper-300: #d5e4ef;
+  --color-paper-400: #a9c2d5;
+  --color-paper-500: #7e97ab;
+  --color-paper-600: #5b7488;
+
+  /* Rules — blue-tinted, never neutral grey */
+  --color-rule: rgba(28, 86, 131, 0.14);
+  --color-rule-strong: rgba(28, 86, 131, 0.26);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-newsreader), ui-serif, Georgia, serif;
+
+  --text-display: clamp(2.75rem, 6.5vw, 6rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.03em;
+
+  --text-hero: clamp(2.5rem, 4.4vw, 4.25rem);
+  --text-hero--line-height: 1;
+  --text-hero--letter-spacing: -0.03em;
+
+  --text-title: clamp(1.875rem, 3.2vw, 2.875rem);
+  --text-title--line-height: 1.08;
+  --text-title--letter-spacing: -0.022em;
+
+  --text-subtitle: clamp(1.25rem, 1.7vw, 1.5rem);
+  --text-subtitle--line-height: 1.25;
+  --text-subtitle--letter-spacing: -0.015em;
+
+  --text-lead: clamp(1.0625rem, 1.25vw, 1.1875rem);
+  --text-lead--line-height: 1.6;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* The header is fixed and 4.5rem tall, so an un-padded anchor jump parks
+       the target's first line underneath it. Every primary nav item is an
+       anchor now, which makes this the difference between the nav landing on
+       a heading and landing just past one. */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-powder-50);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-500);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  ::selection {
+    background-color: var(--color-accent-200);
+    color: var(--color-ink-950);
+  }
+}
+
+@layer components {
+  /* ------------------------------------------------------------------
+     Typographic furniture
+     ------------------------------------------------------------------ */
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent-600);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 1.5rem;
+    height: 2px;
+    border-radius: 2px;
+    background-color: var(--color-accent-400);
+  }
+
+  .eyebrow-blue {
+    color: var(--color-brand-700);
+  }
+
+  .eyebrow-blue::before {
+    background-color: var(--color-brand-500);
+  }
+
+  /* Smallest voice on the page — spec data, dates, units.
+     Deliberately dark: at #5b7488 these read as disabled text rather than as
+     labels, and the page as a whole went washed out. */
+  .spec-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-700);
+  }
+
+  /* Editorial index numerals — always warm, so the numbering system reads as
+     one thread running down the whole page. */
+  .index-num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--color-accent-500);
+  }
+
+  .numeric {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* ------------------------------------------------------------------
+     Actions
+     ------------------------------------------------------------------ */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 999px;
+    padding: 0.9375rem 1.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition:
+      background-color 0.35s var(--ease-out-expo),
+      color 0.35s var(--ease-out-expo),
+      border-color 0.35s var(--ease-out-expo),
+      box-shadow 0.35s var(--ease-out-expo),
+      transform 0.35s var(--ease-spring);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Primary: the warm accent. The only solid warm block on a given screen. */
+  .btn-solid {
+    background-color: var(--color-accent-500);
+    color: #fff;
+    box-shadow: 0 6px 18px -8px rgba(13, 157, 210, 0.5);
+  }
+
+  .btn-solid:hover {
+    background-color: var(--color-accent-600);
+    box-shadow: 0 14px 28px -10px rgba(13, 157, 210, 0.45);
+  }
+
+  .btn-outline {
+    border: 1.5px solid var(--color-powder-400);
+    color: var(--color-ink-900);
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--color-accent-400);
+    color: var(--color-accent-700);
+    background-color: var(--color-accent-50);
+  }
+
+  /* ------------------------------------------------------------------
+     Fluid sweep — the shared hover for the solid and outline buttons.
+
+     A soft highlight travels across the face on hover, on its own compositor
+     layer. `translate3d` rather than `left`, so it never triggers layout.
+     ------------------------------------------------------------------ */
+  .btn-solid,
+  .btn-outline {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .btn-solid::after,
+  .btn-outline::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0 auto 0 0;
+    width: 55%;
+    transform: translate3d(-180%, 0, 0) skewX(-18deg);
+    transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  .btn-solid::after {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.34) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  .btn-outline::after {
+    background: linear-gradient(
+      90deg,
+      rgba(13, 157, 210, 0) 0%,
+      rgba(13, 157, 210, 0.16) 50%,
+      rgba(13, 157, 210, 0) 100%
+    );
+  }
+
+  .btn-solid:hover::after,
+  .btn-outline:hover::after {
+    transform: translate3d(280%, 0, 0) skewX(-18deg);
+  }
+
+  /* ------------------------------------------------------------------
+     Frost dark blue toggle — Commercial ↔ Pipeline
+     ------------------------------------------------------------------ */
+  .frost-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 5.25rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 999px;
+    padding: 0.3125rem;
+    cursor: pointer;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(13, 44, 63, 0.92) 0%,
+        rgba(6, 32, 47, 0.96) 100%
+      );
+    /* The frost: a lit top edge and a deep inner shadow under it. */
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+      inset 0 2px 8px rgba(0, 0, 0, 0.45),
+      0 6px 18px -8px rgba(6, 32, 47, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: box-shadow 400ms var(--ease-out-expo);
+  }
+
+  .frost-toggle:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.24),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+      inset 0 2px 8px rgba(0, 0, 0, 0.45),
+      0 10px 24px -8px rgba(6, 32, 47, 0.7);
+  }
+
+  .frost-knob {
+    display: grid;
+    height: 1.875rem;
+    width: 1.875rem;
+    place-items: center;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #ffffff 0%, #e6f4fb 100%);
+    box-shadow:
+      0 2px 6px rgba(6, 32, 47, 0.45),
+      inset 0 -1px 2px rgba(28, 86, 131, 0.18);
+    /* Springy, because a toggle is the one control that should feel physical. */
+    transition: transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform;
+  }
+
+  .frost-toggle[data-stage="pipeline"] .frost-knob {
+    transform: translate3d(2.75rem, 0, 0);
+  }
+
+  .frost-label {
+    /* The labels are real controls, not captions — they need a thumb-sized
+       target, which 15px text alone does not give them. */
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding: 0 0.125rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--color-ink-700);
+    opacity: 0.5;
+    transition:
+      color 400ms var(--ease-out-expo),
+      opacity 400ms var(--ease-out-expo);
+  }
+
+  .frost-label[data-active="true"] {
+    color: var(--color-ink-950);
+    opacity: 1;
+  }
+
+  /* ------------------------------------------------------------------
+     Tilt cards — product cells that turn toward the pointer
+
+     The perspective lives on the parent so every card in the grid shares one
+     vanishing point; tilting a card that carries its own perspective makes it
+     look sheared rather than turned.
+     ------------------------------------------------------------------ */
+  .tilt-stage {
+    perspective: 1100px;
+  }
+
+  .tilt-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition:
+      transform 480ms var(--ease-spring),
+      box-shadow 420ms var(--ease-out-expo),
+      border-color 380ms var(--ease-out-expo);
+    will-change: transform;
+  }
+
+  .tilt-card:hover {
+    border-color: var(--color-accent-400);
+    box-shadow: 0 24px 44px -22px rgba(6, 32, 47, 0.45);
+  }
+
+  /* A light travels across the face as it turns — the cue that reads as a
+     surface catching a highlight rather than a rectangle moving. */
+  .tilt-card::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0 auto 0 0;
+    width: 45%;
+    transform: translate3d(-200%, 0, 0) skewX(-16deg);
+    background: linear-gradient(
+      90deg,
+      rgba(13, 157, 210, 0) 0%,
+      rgba(13, 157, 210, 0.12) 50%,
+      rgba(13, 157, 210, 0) 100%
+    );
+    transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  .tilt-card:hover::after {
+    transform: translate3d(320%, 0, 0) skewX(-16deg);
+  }
+
+  /* Pack tokens lift in sequence behind the sheen. */
+  .tilt-card:hover .pack-token {
+    transform: translateY(-2px);
+    border-color: var(--color-accent-300);
+  }
+
+  .pack-token {
+    transition:
+      transform 420ms var(--ease-spring),
+      border-color 380ms var(--ease-out-expo);
+    transition-delay: calc(var(--t, 0) * 28ms);
+  }
+
+  /* ------------------------------------------------------------------
+     Breath — concentric rings on a slow respiratory cycle
+
+     The company is named for the thing these describe, so the one built
+     visual on the about page is a breath rather than an abstract shape.
+     Roughly five seconds a cycle, which is a calm adult breathing rate.
+     ------------------------------------------------------------------ */
+  .breath-ring {
+    animation: breathe var(--breath-duration, 7s) ease-in-out infinite;
+    animation-delay: var(--breath-delay, 0s);
+    transform-origin: center;
+  }
+
+  /* ------------------------------------------------------------------
+     Paper fold — the leadership profile opening like an unfolded letter
+
+     The panel is a stack of leaves hinged along their top edge. Each swings
+     down from near-vertical in sequence, and a shadow sits across the leaf
+     while it is tilted, thinning to nothing as it comes flat — that shading is
+     what makes it read as paper catching light rather than as a box rotating.
+
+     The stage owns the perspective with its origin at the top, so the leaves
+     hinge away from the reader instead of pivoting around their middles.
+     ------------------------------------------------------------------ */
+  .fold-stage {
+    perspective: 1600px;
+    perspective-origin: 50% 0%;
+  }
+
+  .fold-leaf {
+    position: relative;
+    transform-origin: top center;
+    /* Stopping at 88° keeps the leaf on its front face the whole way; past 90
+       it flips to the back and blinks out mid-fold. */
+    animation: leafUnfold 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--leaf, 0) * 110ms);
+    will-change: transform;
+  }
+
+  .fold-leaf::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(6, 32, 47, 0.28) 0%,
+      rgba(6, 32, 47, 0.06) 45%,
+      transparent 75%
+    );
+    animation: creaseFade 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--leaf, 0) * 110ms);
+  }
+
+  /* ------------------------------------------------------------------
+     Iris — the category overlay opening from the centre of the screen
+
+     A circular clip expanding past the corners. Chosen over a scale because
+     scaling a full-screen panel scales its type with it, which reads as a
+     zoom; a clip leaves the layout at final size from the first frame and
+     simply uncovers it.
+     ------------------------------------------------------------------ */
+  .iris-open {
+    animation: irisOpen 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .iris-close {
+    animation: irisOpen 420ms cubic-bezier(0.7, 0, 0.84, 0) reverse both;
+  }
+
+  /* Contents arrive just behind the opening edge. */
+  .iris-stagger > * {
+    animation: irisRise 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(180ms + var(--i, 0) * 55ms);
+  }
+
+  /* ------------------------------------------------------------------
+     Bubble fill (after Uiverse.io / nikk7007)
+
+     Two circles grow from opposite corners and meet in the middle, so the
+     button floods rather than cross-fades. Adapted from the original: warm
+     azure instead of the purple, the site's pill radius instead of the
+     0.2em square, and a thinner border so it works at 14px rather than 32px.
+
+     The pseudo-elements sit at `z-index: -1` inside an isolated stacking
+     context, which puts them above the button's own background but below its
+     text. That is what lets any existing `.btn` take this class without its
+     label needing to be wrapped in a span first.
+     ------------------------------------------------------------------ */
+  .btn-bubble {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border: 2px solid var(--color-accent-500);
+    background-color: transparent;
+    color: var(--color-accent-600);
+    /* Overrides `.btn`'s 350ms colour fade. The label has to stay azure
+       until the fill is actually under it — at 350ms the text went white while
+       the button was still mostly transparent and disappeared for a beat. The
+       140ms delay plus the longer curve keeps it legible the whole way. */
+    transition:
+      color 620ms cubic-bezier(0.83, 0, 0.17, 1) 140ms,
+      border-color 400ms var(--ease-out-expo),
+      transform 200ms var(--ease-spring);
+  }
+
+  .btn-bubble::before,
+  .btn-bubble::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 150%;
+    aspect-ratio: 1 / 1;
+    scale: 0;
+    border-radius: 50%;
+    background-color: var(--color-accent-500);
+    translate: -50% -50%;
+    transition: scale 900ms cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .btn-bubble::before {
+    top: 0;
+    left: 0;
+  }
+
+  .btn-bubble::after {
+    top: 100%;
+    left: 100%;
+  }
+
+  .btn-bubble:hover {
+    /* The fill is the whole effect — no lift on top of it. */
+    transform: none;
+    color: #fff;
+  }
+
+  .btn-bubble:hover::before,
+  .btn-bubble:hover::after {
+    scale: 1;
+  }
+
+  .btn-bubble:active {
+    transform: scale(0.98);
+    filter: brightness(0.95);
+  }
+
+  /* On ink, the bubble reads inverted: white fill, dark label. */
+  .btn-bubble-invert {
+    border-color: #fff;
+    color: #fff;
+  }
+
+  .btn-bubble-invert::before,
+  .btn-bubble-invert::after {
+    background-color: #fff;
+  }
+
+  .btn-bubble-invert:hover {
+    color: var(--color-ink-950);
+  }
+
+  /* Text action with a rule that fills warm on hover */
+  .link-rule {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-ink-900);
+    transition: color 0.3s var(--ease-out-expo);
+  }
+
+  .link-rule::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 2px;
+    border-radius: 2px;
+    background-color: var(--color-powder-300);
+    transition: background-color 0.4s var(--ease-out-expo);
+  }
+
+  .link-rule:hover {
+    color: var(--color-accent-600);
+  }
+
+  .link-rule:hover::after {
+    background-color: var(--color-accent-400);
+  }
+
+  /* ------------------------------------------------------------------
+     Surfaces
+     ------------------------------------------------------------------ */
+
+  /* The card. White on powder, soft blue-cast shadow, and it lifts into a
+     warm edge on hover — this is where most of the page's "alive" comes from. */
+  .card {
+    position: relative;
+    border-radius: 1rem;
+    background-color: #fff;
+    border: 1px solid var(--color-powder-200);
+    box-shadow: 0 1px 2px rgba(28, 86, 131, 0.04);
+    transition:
+      transform 0.5s var(--ease-spring),
+      box-shadow 0.5s var(--ease-out-expo),
+      border-color 0.5s var(--ease-out-expo);
+  }
+
+  .card:hover,
+  .card.is-active {
+    transform: translateY(-6px);
+    border-color: var(--color-accent-300);
+    box-shadow: 0 22px 44px -20px rgba(28, 86, 131, 0.3);
+  }
+
+  /* ------------------------------------------------------------------
+     Section surfaces
+
+     All three are translucent on purpose. The laminar flow field is a single
+     fixed canvas behind the whole document, so a section painted with an
+     opaque colour would simply hide it. These carry enough of the powder
+     ground to keep type contrast, and let the flow read through underneath.
+     ------------------------------------------------------------------ */
+  .surface {
+    background-color: rgba(246, 251, 254, 0.76);
+  }
+
+  .surface-tint {
+    background-color: rgba(234, 245, 252, 0.8);
+  }
+
+  /* Page ground for the reading pages — /about and the articles.
+     They carry no flow field, so a pair of very wide, very soft powder pools
+     take its place: enough to stop a full screen of body copy sitting on a
+     flat tint, with nothing structural for the type to fight. */
+  .page-wash {
+    background-image:
+      radial-gradient(
+        60rem 40rem at 12% -5%,
+        rgba(216, 235, 248, 0.85) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        52rem 38rem at 92% 8%,
+        rgba(211, 242, 255, 0.7) 0%,
+        transparent 62%
+      ),
+      radial-gradient(
+        70rem 50rem at 50% 108%,
+        rgba(234, 245, 252, 0.9) 0%,
+        transparent 65%
+      );
+  }
+
+  /* Pinning the ground to the viewport keeps colour under the whole scroll
+     rather than only at the two ends — but a fixed background repaints on
+     every scroll frame, so phones get the static version. */
+  @media (min-width: 1024px) {
+    .page-wash {
+      background-attachment: fixed;
+    }
+  }
+
+  /* A soft powder wash — used behind sections that need to feel airy rather
+     than flat. Not a gradient "effect": two stops of the same hue. */
+  .wash {
+    background-image: radial-gradient(
+      120% 80% at 50% 0%,
+      rgba(234, 245, 252, 0.82) 0%,
+      rgba(246, 251, 254, 0.72) 60%
+    );
+  }
+
+  /* ------------------------------------------------------------------
+     Format vessels — the filled containers in the Categories section
+     ------------------------------------------------------------------ */
+
+  /* The stage owns the perspective; the child does the turning. Splitting them
+     means the rotation has a real vanishing point instead of the flat, sheared
+     look you get from rotating an element with no perspective ancestor. */
+  .vessel-stage {
+    perspective: 620px;
+    perspective-origin: 50% 45%;
+  }
+
+  .vessel-tilt {
+    height: 100%;
+    width: 100%;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg) rotateX(0deg);
+    transition: transform 700ms var(--ease-spring);
+    will-change: transform;
+  }
+
+  /* The meniscus rises to its level once the card is in view. */
+  .vessel-liquid {
+    transition: transform 1600ms var(--ease-out-expo);
+  }
+
+  /* Both surfaces travel one full period, so the loop is seamless. The paths
+     are drawn 200 units wide against a 100-unit viewBox for exactly this. */
+  .vessel-wave {
+    transform-box: view-box;
+    transform-origin: 0 0;
+  }
+
+  .vessel-wave-a {
+    animation: waveDrift 4.5s linear infinite;
+  }
+
+  .vessel-wave-b {
+    animation: waveDrift 7s linear infinite reverse;
+  }
+
+  /* Image treatment */
+  .plate {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    background-color: var(--color-powder-200);
+  }
+
+  .plate img {
+    transition: transform 1.1s var(--ease-out-expo);
+    will-change: transform;
+  }
+
+  .group:hover .plate img,
+  .plate:hover img {
+    transform: scale(1.05);
+  }
+}
+
+/* The facility settles into place on load. */
+@keyframes facilityRise {
+  from {
+    opacity: 0;
+    transform: translateY(2.5rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes veilIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 150% so the circle clears the corners of any aspect ratio before it stops. */
+@keyframes irisOpen {
+  from {
+    clip-path: circle(0% at 50% 50%);
+  }
+  to {
+    clip-path: circle(150% at 50% 50%);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.9;
+  }
+}
+
+@keyframes leafUnfold {
+  from {
+    transform: rotateX(-88deg);
+    opacity: 0;
+  }
+  55% {
+    opacity: 1;
+  }
+  to {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+/* The shadow across a tilted leaf, gone by the time it lies flat. */
+@keyframes creaseFade {
+  from {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes irisRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* One wave period. 50 user units matches the `q12.5 … t25` period the surface
+   paths are drawn on, so the surface returns to an identical position and the
+   loop has no seam. */
+@keyframes waveDrift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50px);
+  }
+}
+
+/* A slow, very shallow drift for the powder washes. Long enough that it never
+   reads as an animation playing — it just stops the large flat areas feeling
+   dead.
+
+   Translate only, deliberately. These elements carry a 64px blur, and scaling
+   a blurred layer forces the browser to re-rasterise the whole blur on every
+   frame; translating it is a compositor-only move that costs nothing. The
+   earlier version scaled to 1.08 and was the single most expensive thing on
+   the page during scroll. */
+@keyframes driftSlow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(3%, -2%, 0);
+  }
+}
+
+/* The washes are decoration. Phones get them static — a blurred half-screen
+   layer animating in the background is exactly the wrong thing to spend a
+   mid-range device's compositor budget on. */
+.drift {
+  animation: driftSlow var(--drift-duration, 30s) ease-in-out infinite;
+}
+
+@media (max-width: 767px) {
+  .drift {
+    animation: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Scroll reveal (Progressive Enhancement - Visible by Default)
+   -------------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s var(--ease-out-expo),
+    transform 0.7s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal-rule] {
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.9s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* When client-side observer is active and ready, handle unrevealed states */
+html.js-reveal [data-reveal]:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(1.25rem);
+}
+
+html.js-reveal [data-reveal-rule]:not(.is-visible) {
+  transform: scaleX(0);
+}
+
+html.js-reveal [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+html.js-reveal [data-reveal-rule].is-visible {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-reveal],
+  [data-reveal-rule] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .btn:hover,
+  .card:hover {
+    transform: none;
+  }
+}
