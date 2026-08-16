@@ -73,9 +73,10 @@ export const stats = [
  * — a format can run across more than one line, so both counts are true and
  * the company claim about five specialised lines still stands below.
  *
- * PENDING — the one-pager ships with `LINES 00 · 00 M UNITS P.A.` unfilled on
- * every format. Unit figures below are carried over from the August 2026 deck
- * where one exists; `lines` is null everywhere because no source states it.
+ * The one-pager ships with `LINES 00 · 00 M UNITS P.A.` unfilled on every
+ * format. Unit figures below are carried over from the August 2026 deck where
+ * one exists; `lines` is null everywhere because no source states a count, and
+ * the card renders that as `Operational` rather than as a pending mark.
  *
  * PENDING — the deck and the one-pager disagree on two fill ranges (BFS:
  * 3–30 ml vs 0.5–500 ml; anaesthetics volume). The one-pager is the later
@@ -92,7 +93,7 @@ export type Format = {
   /** Installed units per annum. `null` where no source states it. */
   units: number | null;
   unitLabel: string;
-  /** Number of lines. PENDING on every format — the one-pager reads `00`. */
+  /** Number of lines, or null where no source states it — the one-pager reads `00`. */
   lines: number | null;
   /** Deck value, kept where it contradicts the one-pager. */
   deckFillRange?: string;

@@ -37,8 +37,9 @@ const MAX = Math.max(...formats.map((f) => f.units ?? 0));
  * the pairing the one-pager leads on — sterile injectables and inhalation
  * anaesthetics in one block on separated flows.
  *
- * Figures count up as they arrive, and anything the one-pager left as `00` or
- * `STATUS` renders as a visible PENDING mark rather than an invented number.
+ * Figures count up as they arrive. The line counts the one-pager left as `00`
+ * read as `Operational` rather than as an invented number; the agent register
+ * still shows a PENDING mark where the one-pager leaves `STATUS` blank.
  */
 export function Capacity() {
   const [totalRef, totalCount] = useInViewCount<HTMLDivElement>(totalUnits, 1900);
@@ -207,8 +208,8 @@ function FormatCard({ format, index }: { format: Format; index: number }) {
         {format.description}
       </p>
 
-      {/* Specs. `Lines` reads PENDING on every format because the one-pager
-          ships it as `00`. */}
+      {/* Specs. The one-pager ships `LINES 00`, so where no count is stated the
+          row carries the state instead of an invented number. */}
       <dl className="mt-auto space-y-2.5 border-t border-rule pt-5 text-sm">
         <div className="flex items-baseline justify-between gap-3">
           <dt className="spec-label">Fill</dt>
@@ -218,11 +219,12 @@ function FormatCard({ format, index }: { format: Format; index: number }) {
           <dt className="spec-label">Lines</dt>
           <dd className="text-ink-900">
             {format.lines ?? (
-              <span
-                className="spec-label rounded-full bg-powder-100 px-2 py-0.5 text-paper-600"
-                title="Not stated on the Capability Statement Rev. 01/2026"
-              >
-                Pending
+              <span className="spec-label inline-flex items-center gap-1.5 text-brand-700">
+                <span
+                  aria-hidden="true"
+                  className="h-1.5 w-1.5 rounded-full bg-brand-500"
+                />
+                Operational
               </span>
             )}
           </dd>
