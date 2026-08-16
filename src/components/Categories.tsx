@@ -38,8 +38,9 @@ const toMillions = (n: number) => {
  * Each card carries an `id` of `format-<id>` so the header's Categories menu
  * can jump straight to one.
  *
- * Anything the one-pager ships unfilled — `LINES 00`, `STATUS` — renders as a
- * visible Pending mark rather than an invented figure.
+ * Where the one-pager ships `LINES 00`, the row reads `Operational` rather than
+ * an invented figure; the agent register still carries a visible Pending mark
+ * where the document leaves `STATUS` blank.
  */
 export function Categories() {
   const [totalRef, totalCount] = useInViewCount<HTMLDivElement>(totalUnits, 1900);
@@ -155,7 +156,8 @@ function FormatCard({ format, index }: { format: Format; index: number }) {
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
         <Image
           src={FORMAT_IMAGES[format.id] || "/images/formats/vial.png"}
-          alt={format.name}
+          // Written out for image search, which only ever sees the alt text.
+          alt={`${format.name} fill–finish line at the Saanso Pharma facility, Eluru — ${format.attribute.toLowerCase()}, ${format.fillRange} fill`}
           fill
           sizes="(max-width: 768px) 50vw, 25vw"
           className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -200,14 +202,25 @@ function FormatCard({ format, index }: { format: Format; index: number }) {
           <div className="flex items-baseline justify-between gap-2">
             <dt className="spec-label text-[0.625rem]">Lines</dt>
             <dd className="text-[0.75rem] text-ink-900">
-              {format.lines ?? (
-                <Pending label="Capability Statement Rev. 01/2026" />
-              )}
+              {format.lines ?? <Operational />}
             </dd>
           </div>
         </dl>
       </div>
     </article>
+  );
+}
+
+/**
+ * The line state. The Capability Statement ships `LINES 00`, so where no count
+ * is stated the row carries the state rather than an invented number.
+ */
+function Operational() {
+  return (
+    <span className="spec-label inline-flex items-center gap-1 text-[0.625rem] text-brand-700">
+      <span aria-hidden="true" className="h-1 w-1 rounded-full bg-brand-500" />
+      Operational
+    </span>
   );
 }
 

@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { articles, contact } from "@/content/site";
 import { articleBodies, type Block } from "@/content/articles";
+import { articleSchema, breadcrumbSchema, graph } from "@/content/schema";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { JsonLd } from "@/components/JsonLd";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 export function generateStaticParams() {
@@ -30,7 +32,14 @@ export async function generateMetadata({
       title: article.title,
       description: article.excerpt,
       publishedTime: article.date,
+      section: article.category,
+      authors: ["Saanso Pharma"],
       images: article.image ? [{ url: article.image }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.excerpt,
     },
   };
 }
@@ -65,8 +74,17 @@ export default async function InsightPage({
 
   const more = articles.filter((a) => a.slug !== article.slug).slice(0, 3);
 
+  const pageGraph = graph(
+    articleSchema(article),
+    breadcrumbSchema([
+      { name: "Insights", path: "/#insights" },
+      { name: article.title, path: `/insights/${article.slug}` },
+    ]),
+  );
+
   return (
     <>
+      <JsonLd data={pageGraph} />
       <ScrollReveal />
       <Header />
 

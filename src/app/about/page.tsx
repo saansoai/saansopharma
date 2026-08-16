@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { ID, SITE_URL, breadcrumbSchema, graph } from "@/content/schema";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { JsonLd } from "@/components/JsonLd";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Principles } from "@/components/Principles";
 import { Leadership } from "@/components/Leadership";
@@ -12,12 +14,42 @@ export const metadata: Metadata = {
   title: "About us",
   description:
     "Saanso Pharma — founded 2017, manufacturing sterile injectables, blow-fill-seal and inhalation anaesthetics at Eluru, Andhra Pradesh. Our mission, our 2030 vision and the road there.",
+  keywords: [
+    "about Saanso Pharma",
+    "Saanso Pharma leadership",
+    "pharmaceutical company Andhra Pradesh",
+    "Saanso Pharma history",
+  ],
   alternates: { canonical: "/about" },
+  openGraph: {
+    type: "profile",
+    url: `${SITE_URL}/about`,
+    title: "About Saanso Pharma",
+    description:
+      "Founded 2017. A ₹58.48 crore facility at Eluru with five specialised production lines, and a stated ambition to be India's leading name in pharmaceuticals by 2030.",
+  },
 };
+
+/** Page-scoped graph. The company itself is described once, in the layout. */
+const aboutGraph = graph(
+  {
+    "@type": "AboutPage",
+    "@id": `${SITE_URL}/about#webpage`,
+    url: `${SITE_URL}/about`,
+    name: "About Saanso Pharma",
+    description: metadata.description,
+    inLanguage: "en-IN",
+    isPartOf: { "@id": ID.website },
+    about: { "@id": ID.organisation },
+    mainEntity: { "@id": ID.organisation },
+  },
+  breadcrumbSchema([{ name: "About us", path: "/about" }]),
+);
 
 export default function AboutPage() {
   return (
     <>
+      <JsonLd data={aboutGraph} />
       <ScrollReveal />
       <Header />
 

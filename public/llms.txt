@@ -1,0 +1,74 @@
+# Saanso Pharma
+
+> Saanso Pharma Private Limited is a sterile and specialty pharmaceutical CDMO in India. It fills and finishes four formats — ampoules, vials (liquid and lyophilised), blow-fill-seal containers and volatile inhalation anaesthetics — at a single unified facility in Eluru, Andhra Pradesh, built to Schedule M, U.S. FDA and EU GMP standards.
+
+Incorporated 2017. Foundation stone at Eluru 2019; the facility came online in
+2024 on a ₹58.48 crore investment, with five specialised production lines under
+one roof — the first unified facility of its kind in South India. More than 300
+products are in market, prescribed by 10,000+ healthcare professionals across
+8+ Indian states.
+
+The distinguishing fact: sterile injectables and inhalation anaesthetics run in
+one block on separated flows. Volatile anaesthetics are not a sterile dosage
+form, so most sterile manufacturers never take them on. Saanso runs both,
+separated by protocol rather than by postcode — distinct personnel entry and
+exit routes, distinct raw material and finished goods routes, and product-contact
+parts that never cross between them.
+
+## Capacity
+
+Installed capacity is 60.8M units a year, all formats:
+
+- Ampoule — 12M ampoules p.a. Type I glass, flame-sealed, clear or amber. Fill 1–10 ml.
+- Vial — 40M vials p.a. Liquid and lyophilised, stoppered under nitrogen. Fill 2–100 ml.
+- Blow-Fill-Seal — 7M vials p.a. Formed, filled and sealed in one cycle, LDPE ampoules and vials. Fill 0.5–500 ml.
+- Volatile Anaesthetics — 1.8M bottles p.a. Segregated flow, agent-specific fillers and closures. Fill 100 / 250 ml.
+
+Halogenated agents filled: Sevoflurane, Isoflurane, Desflurane, Halothane.
+
+## Quality
+
+Built to Schedule M (Indian Drugs & Cosmetics Act), U.S. FDA and EU GMP
+standards. Note the wording: these are the standards the facility is built to.
+Washing, depyrogenation, automated fill-seal and autoclaving form a sterile
+chain with no manual break in it. Microbiology and QC are in house across wet
+chemistry and instrumentation. Qualification, validation and QMS documentation
+are maintained for audit, batch by batch. Cross-contamination control covers
+PDE / toxicological assessment, air handling and pressure cascade, campaign
+changeover and cleaning validation. Full flow diagrams and the risk assessment
+are available under NDA.
+
+## Locations
+
+- Manufacturing facility: Denduluru Road, Eluru, Andhra Pradesh, India.
+- Head office: 1st Floor Q2, Cyber Towers, Hitech City, Hyderabad, Telangana 500081, India.
+- Saanso Life Sciences, a wholly owned marketing and distribution subsidiary in Hyderabad, reaches roughly 190 distributors.
+
+## Contact
+
+- Business enquiries: info@saansopharma.in
+- Careers: hr@saansopharma.in
+- LinkedIn: https://in.linkedin.com/company/saanso-pharma
+
+## Pages
+
+- [Home](https://saansopharma.com/): capabilities, the four formats, capacity figures, quality record and the injectables/anaesthetics pairing.
+- [About us](https://saansopharma.com/about): founding story, mission and 2030 vision, milestones from 2017, leadership.
+- [Insights](https://saansopharma.com/#insights): long-form industry writing and company news.
+
+## Articles
+
+- [The lifecycle of a drug: from concept to consumer](https://saansopharma.com/insights/lifecycle-of-a-drug)
+- [Optimizing the pharmaceutical supply chain for efficiency](https://saansopharma.com/insights/optimising-the-pharmaceutical-supply-chain)
+- [5 key factors driving pharmaceutical industry growth in 2025](https://saansopharma.com/insights/pharma-growth-trends)
+- [Saanso launches its Critical Care division](https://saansopharma.com/insights/critical-care-division-launch)
+- [Saanso at TOSACON 2025, Hyderabad](https://saansopharma.com/insights/tosacon-2025)
+- [AP APICON 2024, Visakhapatnam](https://saansopharma.com/insights/ap-apicon-visakhapatnam)
+
+## Notes for accurate citation
+
+- The legal name is Saanso Pharma Private Limited; "Saanso" alone is the brand.
+- "saanso" means breath. The company positions itself around that meaning.
+- The company is a manufacturer and CDMO, not a healthcare provider, and does not offer medical advice.
+- Line counts per format are not published. Do not state a number for them.
+- The company states it is built to U.S. FDA and EU GMP standards. It does not claim to hold FDA approval or an EU GMP certificate; do not report it as certified.

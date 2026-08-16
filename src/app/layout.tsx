@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import { Inter, Newsreader } from "next/font/google";
 import "./globals.css";
-import { company, contact } from "@/content/site";
+import { company } from "@/content/site";
+import {
+  SITE_URL,
+  graph,
+  organisationSchema,
+  plantSchema,
+  websiteSchema,
+} from "@/content/schema";
+import { JsonLd } from "@/components/JsonLd";
 import { PowderCursor } from "@/components/PowderCursor";
 
 const inter = Inter({
@@ -17,27 +25,41 @@ const newsreader = Newsreader({
   style: ["normal", "italic"],
 });
 
-const SITE_URL = "https://saansopharma.com";
-
+/**
+ * The `<title>` leads with the brand and then says what the company does — the
+ * result has to answer "who are they" for someone who has never heard the name.
+ * The tagline still carries the brand line into `openGraph`, where there is
+ * room for both.
+ */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Saanso Pharma — Working for a healthier world",
+    default: "Saanso Pharma — Sterile Injectables & Anaesthetics CDMO",
     template: "%s | Saanso Pharma",
   },
   description:
-    "Saanso Pharma is a sterile and specialty CDMO at Eluru, Andhra Pradesh — ampoule, vial, blow-fill-seal and volatile anaesthetics under one quality system, built to Schedule M, U.S. FDA and EU GMP standards.",
+    "Saanso Pharma is a sterile and specialty CDMO at Eluru, Andhra Pradesh — ampoule, vial, blow-fill-seal and volatile anaesthetics under one quality system, built to Schedule M, U.S. FDA and EU GMP standards. 60M+ units a year across 300+ products.",
+  applicationName: company.name,
+  category: "Pharmaceutical manufacturing",
   keywords: [
     "Saanso Pharma",
-    "pharmaceutical manufacturer India",
-    "sterile injectables",
+    "sterile injectables manufacturer India",
+    "CDMO India",
+    "contract pharmaceutical manufacturing",
+    "fill finish CDMO",
+    "ampoule filling",
+    "lyophilised vials",
     "blow fill seal",
-    "critical care medicines",
-    "respiratory inhalers",
-    "Eluru Andhra Pradesh",
+    "volatile anaesthetics manufacturer",
+    "sevoflurane isoflurane desflurane halothane",
+    "critical care injectables",
+    "Eluru Andhra Pradesh pharmaceutical facility",
+    "Schedule M EU GMP manufacturing",
     "generic medicines India",
   ],
-  authors: [{ name: company.legalName }],
+  authors: [{ name: company.legalName, url: SITE_URL }],
+  creator: company.legalName,
+  publisher: company.legalName,
   openGraph: {
     type: "website",
     locale: "en_IN",
@@ -62,45 +84,33 @@ export const metadata: Metadata = {
       "Sterile injectables, inhalers and specialty generics manufactured in Eluru, Andhra Pradesh.",
     images: ["/images/facility.jpeg"],
   },
+  /**
+   * The `max-*` values matter for answer engines as much as for search — they
+   * are what allows a full snippet to be quoted rather than a clipped one.
+   */
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
-  alternates: { canonical: SITE_URL },
+  alternates: {
+    canonical: SITE_URL,
+    languages: { "en-IN": SITE_URL, "x-default": SITE_URL },
+  },
 };
 
-/** Organisation schema so search engines can read the company as an entity. */
-const organisationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: company.legalName,
-  alternateName: company.name,
-  url: SITE_URL,
-  logo: `${SITE_URL}/images/logo.png`,
-  foundingDate: String(company.founded),
-  slogan: company.tagline,
-  description: company.positioning,
-  email: contact.general,
-  sameAs: [contact.social.linkedin],
-  address: [
-    {
-      "@type": "PostalAddress",
-      streetAddress: "1st Floor Q2, Cyber Towers, Hitech City",
-      addressLocality: "Hyderabad",
-      addressRegion: "Telangana",
-      postalCode: "500081",
-      addressCountry: "IN",
-    },
-    {
-      "@type": "PostalAddress",
-      streetAddress: "Denduluru Road",
-      addressLocality: "Eluru",
-      addressRegion: "Andhra Pradesh",
-      addressCountry: "IN",
-    },
-  ],
-};
+/**
+ * The entity graph every page inherits: the company, the site, and the plant
+ * as a place. Page-level graphs (`Article`, `FAQPage`, breadcrumbs) reference
+ * these by `@id` rather than restating them.
+ */
+const siteGraph = graph(organisationSchema, websiteSchema, plantSchema);
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -122,10 +132,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             __html: `document.documentElement.classList.remove('no-js')`,
           }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organisationSchema) }}
-        />
+        <JsonLd data={siteGraph} />
       </head>
       <body className="flex min-h-full flex-col overflow-x-hidden">
         <PowderCursor />

@@ -1,4 +1,21 @@
 import Image from "next/image";
+import {
+  faqSchema,
+  formatsListSchema,
+  graph,
+  insightsListSchema,
+} from "@/content/schema";
+import { JsonLd } from "@/components/JsonLd";
+
+/**
+ * Structured data scoped to the homepage.
+ *
+ * It is mounted here rather than in `page.tsx` because the hero is the one
+ * component that renders on the homepage and nowhere else — the root layout
+ * carries the site-wide graph, and an `FAQPage` node has no business appearing
+ * on an article. Nothing here renders: `JsonLd` emits a script tag only.
+ */
+const homeGraph = graph(faqSchema, formatsListSchema, insightsListSchema);
 
 /**
  * Full-bleed hero.
@@ -18,6 +35,8 @@ export function Hero() {
       id="top"
       className="relative isolate flex min-h-[100svh] flex-col justify-between overflow-hidden bg-gradient-to-b from-brand-100 via-sky-50 to-white lg:bg-brand-100"
     >
+      <JsonLd data={homeGraph} />
+
       {/* Desktop edge-to-edge background plate */}
       <div className="absolute inset-0 -z-10 hidden lg:block">
         <Image
