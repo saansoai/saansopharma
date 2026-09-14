@@ -75,6 +75,63 @@ export function Portfolio() {
     [stage],
   );
 
+  const openCategory = useCallback((catParam: string) => {
+    // Check in commercial first
+    const inCommercial = portfolio
+      .find((s) => s.id === "commercial")
+      ?.categories.some((c) => c.id === catParam);
+
+    if (inCommercial) {
+      setStageId("commercial");
+      setOpenId(catParam);
+      return;
+    }
+
+    // Check in pipeline
+    const inPipeline = portfolio
+      .find((s) => s.id === "pipeline")
+      ?.categories.some((c) => c.id === catParam);
+
+    if (inPipeline) {
+      setStageId("pipeline");
+      setOpenId(catParam);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleUrlCategory = () => {
+      const url = new URL(window.location.href);
+      let catParam = url.searchParams.get("category");
+
+      if (!catParam && window.location.hash.includes("category=")) {
+        const match = window.location.hash.match(/category=([^&#]+)/);
+        if (match) catParam = match[1];
+      }
+
+      if (catParam) {
+        openCategory(catParam);
+      }
+    };
+
+    const handleCustomEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail) {
+        openCategory(customEvent.detail);
+      }
+    };
+
+    handleUrlCategory();
+    window.addEventListener("popstate", handleUrlCategory);
+    window.addEventListener("hashchange", handleUrlCategory);
+    window.addEventListener("open-portfolio-category", handleCustomEvent);
+
+    return () => {
+      window.removeEventListener("popstate", handleUrlCategory);
+      window.removeEventListener("hashchange", handleUrlCategory);
+      window.removeEventListener("open-portfolio-category", handleCustomEvent);
+    };
+  }, [openCategory]);
+
   const open = stage.categories.find((c) => c.id === openId) ?? null;
 
   return (

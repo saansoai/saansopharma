@@ -320,14 +320,7 @@ function Pairing() {
                 </span>
                 {agent.status ? (
                   <span className="spec-label">{agent.status}</span>
-                ) : (
-                  <span
-                    className="spec-label rounded-full bg-powder-100 px-2 py-0.5 text-paper-600"
-                    title="Status not stated on the Capability Statement Rev. 01/2026"
-                  >
-                    Pending
-                  </span>
-                )}
+                ) : null}
               </li>
             );
           })}

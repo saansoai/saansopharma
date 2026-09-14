@@ -127,10 +127,10 @@ export function Hero() {
             {/* Action Buttons */}
             <div className="mt-4 flex items-center gap-2.5">
               <a
-                href="#categories"
+                href="#capacity"
                 className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-ink-950 py-3 text-xs sm:text-sm font-medium text-white shadow-md transition-all active:scale-98 hover:bg-brand-700"
               >
-                <span>Inside the facility</span>
+                <span>See what we do</span>
                 <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 fill-current">
                   <path d="M4 8h8M9 5l3 3-3 3" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
                 </svg>
@@ -147,7 +147,7 @@ export function Hero() {
         </div>
 
         {/* ================= DESKTOP VIEW ================= */}
-        <div className="hidden lg:block max-w-[34rem]">
+        <div className="hidden lg:block max-w-[28rem]">
           <div className="flex items-center gap-2" data-reveal>
             <span className="h-2 w-2 rounded-full bg-accent-500 animate-pulse" />
             <p className="eyebrow">
@@ -156,7 +156,7 @@ export function Hero() {
           </div>
 
           <h1
-            className="mt-5 font-display text-[clamp(2.5rem,5.2vw,4.5rem)] font-normal leading-[1.02] tracking-[-0.03em] text-ink-950"
+            className="mt-4 font-display text-[clamp(2rem,3.6vw,3.5rem)] font-normal leading-[1.05] tracking-[-0.025em] text-ink-950"
             data-reveal
             style={{ "--reveal-delay": "90ms" } as React.CSSProperties}
           >
@@ -164,7 +164,7 @@ export function Hero() {
           </h1>
 
           <p
-            className="mt-3 font-display text-2xl font-serif italic text-brand-700 font-normal"
+            className="mt-3 font-display text-xl sm:text-2xl font-serif italic text-brand-700 font-normal"
             data-reveal
             style={{ "--reveal-delay": "120ms" } as React.CSSProperties}
           >
@@ -172,7 +172,7 @@ export function Hero() {
           </p>
 
           <p
-            className="mt-4 text-base leading-relaxed text-ink-700 font-medium max-w-lg"
+            className="mt-3.5 text-sm sm:text-base leading-relaxed text-ink-700 font-medium max-w-[24rem]"
             data-reveal
             style={{ "--reveal-delay": "150ms" } as React.CSSProperties}
           >
@@ -185,10 +185,10 @@ export function Hero() {
             style={{ "--reveal-delay": "180ms" } as React.CSSProperties}
           >
             <a
-              href="#categories"
+              href="#capacity"
               className="group inline-flex items-center gap-2.5 rounded-full bg-ink-950 px-7 py-3.5 text-base font-medium text-white shadow-lg shadow-sky-950/15 transition-all duration-300 hover:bg-brand-700 hover:shadow-xl active:scale-95"
             >
-              Inside the facility
+              See what we do
               <svg
                 viewBox="0 0 16 16"
                 aria-hidden="true"

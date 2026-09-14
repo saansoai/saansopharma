@@ -71,7 +71,7 @@ export function Leadership() {
         {hasTeam && active ? (
           <div className="mt-10 lg:mt-16" data-reveal>
             {/* ---- Roster ---- */}
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
               {leadership.map((leader, i) => {
                 const isActive = i === activeIndex;
                 return (

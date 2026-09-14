@@ -63,6 +63,29 @@ export function Header() {
 
   const cancelClose = () => window.clearTimeout(closeTimer.current);
 
+  const handleNavClick = (href: string) => {
+    setOpenMenu(null);
+    setMenuOpen(false);
+
+    if (href.includes("category=")) {
+      const match = href.match(/category=([^&#]+)/);
+      if (match) {
+        const catId = match[1];
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(
+            new CustomEvent("open-portfolio-category", { detail: catId })
+          );
+          setTimeout(() => {
+            const portfolioEl = document.getElementById("portfolio");
+            if (portfolioEl) {
+              portfolioEl.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 50);
+        }
+      }
+    }
+  };
+
   return (
     <>
       <a
@@ -103,12 +126,12 @@ export function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="group relative flex items-center px-5 text-[0.8125rem] font-medium tracking-[0.01em] text-ink-700 transition-colors duration-300 hover:text-ink-950"
+                    className="group relative flex items-center px-5 text-[0.875rem] font-semibold tracking-[-0.01em] text-ink-950 transition-colors duration-200 hover:text-brand-600"
                   >
                     {item.label}
                     <span
                       aria-hidden="true"
-                      className="pointer-events-none absolute inset-x-5 bottom-5 h-0.5 origin-left scale-x-0 rounded-full bg-accent-400 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
+                      className="pointer-events-none absolute inset-x-5 bottom-5 h-0.5 origin-left scale-x-0 rounded-full bg-brand-600 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100"
                     />
                   </Link>
                 );
@@ -129,20 +152,20 @@ export function Header() {
                     aria-expanded={isOpen}
                     aria-haspopup="true"
                     onClick={() => setOpenMenu(isOpen ? null : item.label)}
-                    className="group relative flex cursor-pointer items-center gap-1.5 px-5 text-[0.8125rem] font-medium tracking-[0.01em] text-ink-700 transition-colors duration-300 hover:text-ink-950"
+                    className="group relative flex cursor-pointer items-center gap-1.5 px-5 text-[0.875rem] font-semibold tracking-[-0.01em] text-ink-950 transition-colors duration-200 hover:text-brand-600"
                   >
                     {item.label}
                     <svg
                       viewBox="0 0 16 16"
                       aria-hidden="true"
-                      className={`h-3 w-3 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                        isOpen ? "-rotate-180" : ""
+                      className={`h-3.5 w-3.5 text-ink-800 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                        isOpen ? "-rotate-180 text-brand-600" : "group-hover:text-brand-600"
                       }`}
                     >
                       <path
                         d="M4 6.5L8 10.5L12 6.5"
                         stroke="currentColor"
-                        strokeWidth="1.5"
+                        strokeWidth="1.75"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         fill="none"
@@ -150,36 +173,34 @@ export function Header() {
                     </svg>
                     <span
                       aria-hidden="true"
-                      className={`pointer-events-none absolute inset-x-5 bottom-5 h-0.5 origin-left rounded-full bg-accent-400 transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      className={`pointer-events-none absolute inset-x-5 bottom-5 h-0.5 origin-left rounded-full bg-brand-600 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                         isOpen ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       }`}
                     />
                   </button>
 
-                  {/* The panel sizes to its content — the items are short
-                      labels now, and a fixed width left most of it empty. */}
                   <div
                     onPointerEnter={cancelClose}
                     onPointerLeave={scheduleClose}
-                    className={`absolute top-full left-1/2 w-max min-w-[13rem] max-w-[23rem] -translate-x-1/2 pt-2 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    className={`absolute top-full left-1/2 w-max min-w-[17rem] max-w-[28rem] -translate-x-1/2 pt-2 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                       isOpen
                         ? "visible translate-y-0 opacity-100"
                         : "invisible -translate-y-1 opacity-0"
                     }`}
                   >
-                    <div className="overflow-hidden rounded-2xl border border-powder-200 bg-white p-2 shadow-[0_24px_48px_-20px_rgba(28,86,131,0.28)]">
+                    <div className="max-h-[80vh] overflow-y-auto rounded-2xl border border-sky-200/90 bg-white/95 p-2 shadow-2xl shadow-sky-950/15 backdrop-blur-xl ring-1 ring-sky-100">
                       {item.children?.map((child) => (
                         <Link
                           key={`${child.label}-${child.href}`}
                           href={child.href}
-                          onClick={() => setOpenMenu(null)}
-                          className="group/item flex items-center justify-between gap-4 rounded-xl px-4 py-3 transition-colors duration-200 hover:bg-powder-50"
+                          onClick={() => handleNavClick(child.href)}
+                          className="group/item flex items-center justify-between gap-4 rounded-xl px-3.5 py-2.5 transition-colors duration-150 hover:bg-sky-50"
                         >
-                          <span className="font-display text-base text-ink-950 transition-colors duration-200 group-hover/item:text-accent-700">
+                          <span className="text-[0.84375rem] font-medium text-ink-950 transition-colors duration-150 group-hover/item:text-brand-600">
                             {child.label}
                           </span>
                           {child.hint ? (
-                            <span className="spec-label numeric shrink-0">
+                            <span className="spec-label numeric shrink-0 text-[0.6875rem] text-slate-500">
                               {child.hint}
                             </span>
                           ) : null}
@@ -209,7 +230,7 @@ export function Header() {
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              className="relative z-10 -mr-2 flex h-11 w-11 items-center justify-center text-ink-900 lg:hidden"
+              className="relative z-10 -mr-2 flex h-11 w-11 items-center justify-center text-ink-950 lg:hidden"
             >
               <span className="sr-only">{menuOpen ? "Close menu" : "Open menu"}</span>
               <span aria-hidden="true" className="relative block h-3.5 w-5">
@@ -255,30 +276,30 @@ export function Header() {
                 <Link
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-baseline justify-between gap-6 py-5 active:bg-powder-100/50 rounded-xl px-2"
+                  className="flex items-baseline justify-between gap-6 py-4 active:bg-powder-100/50 rounded-xl px-2"
                 >
                   <span className="font-display text-2xl font-normal tracking-[-0.02em] text-ink-950">
                     {item.label}
                   </span>
-                  <span className="index-num numeric shrink-0">
+                  <span className="index-num numeric shrink-0 font-medium text-ink-950">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </Link>
 
                 {item.children?.length ? (
-                  <ul className="-mt-1 pb-4 pl-3 space-y-1">
+                  <ul className="-mt-1 pb-3 pl-3 space-y-1">
                     {item.children.map((child) => (
                       <li key={`${child.label}-${child.href}`}>
                         <Link
                           href={child.href}
-                          onClick={() => setMenuOpen(false)}
-                          className="flex items-center justify-between gap-4 py-2 px-3 rounded-lg hover:bg-powder-100 active:bg-powder-200 transition-colors"
+                          onClick={() => handleNavClick(child.href)}
+                          className="flex items-center justify-between gap-4 py-2 px-3 rounded-lg hover:bg-sky-50 active:bg-sky-100 transition-colors"
                         >
-                          <span className="text-[0.9375rem] font-medium text-ink-700">
+                          <span className="text-[0.9375rem] font-medium text-ink-950">
                             {child.label}
                           </span>
                           {child.hint ? (
-                            <span className="spec-label numeric shrink-0">
+                            <span className="spec-label numeric shrink-0 text-xs text-slate-500">
                               {child.hint}
                             </span>
                           ) : null}

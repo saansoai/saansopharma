@@ -129,6 +129,58 @@ export function Insights() {
             ))}
           </div>
         </div>
+        {/* On the ground / Media Gallery Showcase */}
+        <div className="mt-12 lg:mt-16 overflow-hidden rounded-3xl border border-sky-200/80 bg-white/90 p-6 sm:p-8 lg:p-10 shadow-xl shadow-sky-950/5 backdrop-blur-xl" data-reveal>
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
+            
+            {/* Text details on the left */}
+            <div className="lg:col-span-5">
+              <div className="flex items-center gap-2">
+                <span className="h-0.5 w-6 bg-blue-600 rounded-full"></span>
+                <span className="text-xs font-bold uppercase tracking-widest text-blue-600">
+                  ON THE GROUND · MEDIA
+                </span>
+              </div>
+
+              <h3 className="mt-4 font-display text-2xl sm:text-3xl font-normal tracking-tight text-ink-950">
+                We turn up in person.
+              </h3>
+
+              <p className="mt-4 text-xs sm:text-sm leading-relaxed text-slate-700 font-medium">
+                Distributors, prescribers and partners meet the people who make the product — at CPHI, across national medical conferences, and on-site at our Eluru facility.
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                <span className="rounded-full bg-sky-100/80 px-3 py-1 text-xs font-semibold text-sky-900 ring-1 ring-sky-200">
+                  CPHI India
+                </span>
+                <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-slate-200">
+                  TOSACON 2025
+                </span>
+                <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-slate-200">
+                  AP APICON
+                </span>
+              </div>
+            </div>
+
+            {/* Photo card on the right */}
+            <div className="lg:col-span-7">
+              <div className="relative group aspect-16/10 w-full overflow-hidden rounded-2xl border-2 border-sky-100 bg-sky-50 shadow-lg">
+                <Image
+                  src="/images/team/cphi-india.jpg"
+                  alt="The Saanso Pharma team at CPHI India"
+                  fill
+                  sizes="(min-width: 1024px) 55vw, 100vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute bottom-3 left-3 rounded-full bg-black/60 backdrop-blur-md px-3.5 py-1 text-[0.6875rem] font-semibold text-white tracking-wide shadow-sm border border-white/20">
+                  The Saanso Team · CPHI India
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
 
       </div>
     </section>

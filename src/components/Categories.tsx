@@ -103,11 +103,33 @@ export function Categories() {
             <FormatCard key={format.id} format={format} index={i} />
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
 
+export function PairingAndQuality() {
+  return (
+    <section
+      id="pairing-quality"
+      className="wash relative overflow-hidden border-b border-rule py-10 lg:py-16"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 -right-32 h-[34rem] w-[34rem] rounded-full bg-powder-200/60 blur-3xl drift"
+        style={{ "--drift-duration": "26s" } as React.CSSProperties}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-48 -left-40 h-[30rem] w-[30rem] rounded-full bg-accent-100/50 blur-3xl drift"
+        style={{ "--drift-duration": "32s", animationDirection: "reverse" } as React.CSSProperties}
+      />
+
+      <div className="relative mx-auto max-w-[88rem] px-4 sm:px-6 lg:px-10">
         <Pairing />
 
         {/* ---- Quality assurance (2x2 / 3-Col compact) ---- */}
-        <div id="quality" className="mt-10 lg:mt-12">
+        <div id="quality" className="mt-10 lg:mt-16">
           <p className="eyebrow eyebrow-blue" data-reveal>
             Quality assurance
           </p>
@@ -319,9 +341,7 @@ function Pairing() {
                 </span>
                 {agent.status ? (
                   <span className="spec-label">{agent.status}</span>
-                ) : (
-                  <Pending label="Status not stated on the Capability Statement Rev. 01/2026" />
-                )}
+                ) : null}
               </li>
             );
           })}

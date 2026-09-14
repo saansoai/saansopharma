@@ -8,7 +8,6 @@ import { JsonLd } from "@/components/JsonLd";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Principles } from "@/components/Principles";
 import { Leadership } from "@/components/Leadership";
-import { TeamPlate } from "@/components/TeamPlate";
 
 export const metadata: Metadata = {
   title: "About us",
@@ -256,7 +255,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <TeamPlate />
         <Principles />
         <Leadership />
       </main>

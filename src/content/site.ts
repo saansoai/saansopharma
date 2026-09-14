@@ -186,8 +186,6 @@ export const pairing = {
 export const anaestheticAgents = [
   { name: "Sevoflurane", colour: "#F5C400", status: null as string | null },
   { name: "Isoflurane", colour: "#8B5FA8", status: null as string | null },
-  { name: "Desflurane", colour: "#2A86BF", status: null as string | null },
-  { name: "Halothane", colour: "#D6453C", status: null as string | null },
 ] as const;
 
 export type Milestone = {
@@ -288,12 +286,12 @@ export const certifications = [
 
 export const qualityPillars = [
   {
-    title: "Sterile by design",
+    title: "Quality by design",
     detail:
       "Washing, depyrogenation, automated fill-seal and autoclaving — a sterile chain with no manual break in it.",
   },
   {
-    title: "Tested, then tested again",
+    title: "Tested with perfection",
     detail:
       "In-house microbiology and QC across wet chemistry and instrumentation, to written protocol.",
   },
@@ -407,15 +405,25 @@ export const navigation: readonly NavItem[] = [
     href: "/about",
     children: [
       { label: "About Saanso", href: "/about" },
-      { label: "Directors", href: "/about#leadership" },
-      { label: "Team", href: "/about#team" },
+      { label: "Leaders", href: "/about#leadership" },
     ],
   },
   { label: "Our Capabilities", href: "/#capacity" },
-  { label: "Products", href: "/#portfolio" },
   {
-    // PENDING — News & Updates and Blogs both land on the single Insights
-    // section; there is no separate news feed to point the first one at.
+    label: "Products",
+    href: "/#portfolio",
+    children: [
+      { label: "All Products & Portfolio", href: "/#portfolio" },
+      { label: "Vials (Liquid Injections)", href: "/?category=vials-liquid-injections#portfolio" },
+      { label: "Ampoules (Liquid Injections)", href: "/?category=ampoules-liquid-injections#portfolio" },
+      { label: "BFS Vials / Respules", href: "/?category=bfs-blow-fill-seal-vials-respules#portfolio" },
+      { label: "Ophthalmics (Eye Drops)", href: "/?category=ophthalmics-eye-drops#portfolio" },
+      { label: "Inhalation Anaesthetics", href: "/?category=inhalation-anaesthetic-glass-bottle#portfolio" },
+      { label: "Contrast Agents", href: "/?category=contrast-agents-glass-vials#portfolio" },
+      { label: "Infusion (Liquid Injections)", href: "/?category=infusion-liquid-injections#portfolio" },
+    ],
+  },
+  {
     label: "Media",
     href: "/#insights",
     children: [
@@ -499,6 +507,17 @@ export const leadership: readonly Leader[] = [
     ],
   },
   {
+    name: "Mr. Pruthvi Krishna Vankineni",
+    role: "Director",
+    bio: [
+      "Mr. Pruthvi Krishna Vankineni is a dynamic business leader with multidisciplinary experience across hospitality, aquaculture, construction, food-grain trading, and FMCG exports.",
+      "He brings a strong entrepreneurial perspective to strategic planning, business operations, investments, and new ventures, with a focus on identifying opportunities and driving sustainable growth.",
+      "Mr. Vankineni has demonstrated strong capabilities in managing business challenges, building stakeholder relationships, and leading teams toward operational efficiency and organizational growth. He also actively contributes to enhancing the organization\u2019s public profile through industry events and professional engagements.",
+      "A Bachelor of Business Administration (BBA) graduate, he has developed a broad global perspective through extensive travel across India and abroad. Known for his adaptability, entrepreneurial mindset, and passion for new opportunities, he brings a practical and forward-looking approach to business leadership.",
+    ],
+    companies: ["Hospitality", "Aquaculture", "FMCG Exports", "Construction"],
+  },
+  {
     name: "Mr. Subbu Bhupathiraju",
     role: "Head \u2014 Business Development",
     bio: [
@@ -506,10 +525,10 @@ export const leadership: readonly Leader[] = [
     ],
   },
   {
-    name: "Mr. Suresh M",
+    name: "Mr. M Suresh",
     role: "Manager \u2014 Business Development",
     bio: [
-      "Mr. Suresh M brings 20+ years of pharmaceutical industry experience, with strong expertise in business development, client engagement, strategic partnerships, and identifying new. He has held key roles with Hetero, Aurobindo Pharma, and Dr. Reddy\u2019s Laboratories, gaining extensive industry exposure and a strong understanding of pharmaceutical operations and regulatory requirements.",
+      "Mr. M Suresh brings 20+ years of pharmaceutical industry experience, with strong expertise in business development, client engagement, strategic partnerships, and identifying new opportunities. He has held key roles with Hetero, Aurobindo Pharma, and Dr. Reddy\u2019s Laboratories, gaining extensive industry exposure and a strong understanding of pharmaceutical operations and regulatory requirements.",
     ],
     years: "20+",
     companies: ["Hetero", "Aurobindo Pharma", "Dr. Reddy\u2019s Laboratories"],
