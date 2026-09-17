@@ -81,7 +81,7 @@ export function Capacity() {
               style={{ "--reveal-delay": "140ms" } as React.CSSProperties}
             >
               {company.claim} One site, one team, one audit, four routes to
-              market — none of it subcontracted.
+              market.
             </p>
           </div>
 

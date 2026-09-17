@@ -393,10 +393,18 @@ export const articles: readonly Article[] = [
  * `hint` is optional — the format menu used it to show a fill range beside
  * each item, and nothing in the current set has an equivalent.
  */
+export type NavLink = {
+  label: string;
+  href: string;
+  hint?: string;
+  /** Sub-points, indented beneath this entry in the submenu. */
+  children?: readonly NavLink[];
+};
+
 export type NavItem = {
   label: string;
   href: string;
-  children?: readonly { label: string; href: string; hint?: string }[];
+  children?: readonly NavLink[];
 };
 
 export const navigation: readonly NavItem[] = [
@@ -413,14 +421,19 @@ export const navigation: readonly NavItem[] = [
     label: "Products",
     href: "/#portfolio",
     children: [
-      { label: "All Products & Portfolio", href: "/#portfolio" },
-      { label: "Vials (Liquid Injections)", href: "/?category=vials-liquid-injections#portfolio" },
-      { label: "Ampoules (Liquid Injections)", href: "/?category=ampoules-liquid-injections#portfolio" },
-      { label: "BFS Vials / Respules", href: "/?category=bfs-blow-fill-seal-vials-respules#portfolio" },
-      { label: "Ophthalmics (Eye Drops)", href: "/?category=ophthalmics-eye-drops#portfolio" },
-      { label: "Inhalation Anaesthetics", href: "/?category=inhalation-anaesthetic-glass-bottle#portfolio" },
-      { label: "Contrast Agents", href: "/?category=contrast-agents-glass-vials#portfolio" },
-      { label: "Infusion (Liquid Injections)", href: "/?category=infusion-liquid-injections#portfolio" },
+      {
+        label: "All Products & Portfolio",
+        href: "/#portfolio",
+        children: [
+          { label: "Vials (Liquid Injections)", href: "/?category=vials-liquid-injections#portfolio" },
+          { label: "Infusion (Liquid Injections)", href: "/?category=infusion-liquid-injections#portfolio" },
+          { label: "Ampoules (Liquid Injections)", href: "/?category=ampoules-liquid-injections#portfolio" },
+          { label: "BFS Vials / Respules", href: "/?category=bfs-blow-fill-seal-vials-respules#portfolio" },
+          { label: "Ophthalmics (Eye Drops)", href: "/?category=ophthalmics-eye-drops#portfolio" },
+          { label: "Inhalation Anaesthetics", href: "/?category=inhalation-anaesthetic-glass-bottle#portfolio" },
+          { label: "Contrast Agents", href: "/?category=contrast-agents-glass-vials#portfolio" },
+        ],
+      },
     ],
   },
   {

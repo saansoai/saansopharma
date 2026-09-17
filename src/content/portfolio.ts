@@ -24,8 +24,7 @@ export type PortfolioProduct = {
 export type PortfolioCategory = {
   id: string;
   name: string;
-  /** Which container drawing represents this category. */
-  vessel: "vial" | "ampoule" | "bfs" | "anaesthetics" | "infusion" | "ophthalmic";
+  vessel: "vial" | "ampoule" | "bfs" | "anaesthetics" | "infusion" | "ophthalmic" | "contrast";
   products: readonly PortfolioProduct[];
 };
 
@@ -175,7 +174,7 @@ const pipeline: readonly PortfolioCategory[] = [
   {
     id: "contrast-agents-glass-vials",
     name: "Contrast Agents (Glass Vials)",
-    vessel: "vial",
+    vessel: "contrast",
     products: [
       { name: "Gadobutrol Injection", therapy: "MRI Contrast Agent", strength: "1 mmol/mL", presentation: "20 mL, 30 mL" },
       { name: "Gadodiamide Injection", therapy: "MRI Contrast Agent", strength: "287 mg/mL", presentation: "10 mL, 20 mL" },

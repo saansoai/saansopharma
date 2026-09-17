@@ -190,21 +190,44 @@ export function Header() {
                   >
                     <div className="max-h-[80vh] overflow-y-auto rounded-2xl border border-sky-200/90 bg-white/95 p-2 shadow-2xl shadow-sky-950/15 backdrop-blur-xl ring-1 ring-sky-100">
                       {item.children?.map((child) => (
-                        <Link
-                          key={`${child.label}-${child.href}`}
-                          href={child.href}
-                          onClick={() => handleNavClick(child.href)}
-                          className="group/item flex items-center justify-between gap-4 rounded-xl px-3.5 py-2.5 transition-colors duration-150 hover:bg-sky-50"
-                        >
-                          <span className="text-[0.84375rem] font-medium text-ink-950 transition-colors duration-150 group-hover/item:text-brand-600">
-                            {child.label}
-                          </span>
-                          {child.hint ? (
-                            <span className="spec-label numeric shrink-0 text-[0.6875rem] text-slate-500">
-                              {child.hint}
+                        <div key={`${child.label}-${child.href}`}>
+                          <Link
+                            href={child.href}
+                            onClick={() => handleNavClick(child.href)}
+                            className="group/item flex items-center justify-between gap-4 rounded-xl px-3.5 py-2.5 transition-colors duration-150 hover:bg-sky-50"
+                          >
+                            <span
+                              className={`text-[0.84375rem] text-ink-950 transition-colors duration-150 group-hover/item:text-brand-600 ${
+                                child.children?.length ? "font-semibold" : "font-medium"
+                              }`}
+                            >
+                              {child.label}
                             </span>
+                            {child.hint ? (
+                              <span className="spec-label numeric shrink-0 text-[0.6875rem] text-slate-500">
+                                {child.hint}
+                              </span>
+                            ) : null}
+                          </Link>
+
+                          {child.children?.length ? (
+                            <ul className="mb-1 ml-3.5 border-l border-rule pl-2">
+                              {child.children.map((sub) => (
+                                <li key={`${sub.label}-${sub.href}`}>
+                                  <Link
+                                    href={sub.href}
+                                    onClick={() => handleNavClick(sub.href)}
+                                    className="group/sub flex items-center justify-between gap-4 rounded-lg px-3 py-2 transition-colors duration-150 hover:bg-sky-50"
+                                  >
+                                    <span className="text-[0.8125rem] font-medium text-ink-800 transition-colors duration-150 group-hover/sub:text-brand-600">
+                                      {sub.label}
+                                    </span>
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
                           ) : null}
-                        </Link>
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -304,6 +327,24 @@ export function Header() {
                             </span>
                           ) : null}
                         </Link>
+
+                        {child.children?.length ? (
+                          <ul className="mt-0.5 mb-1 ml-5 border-l border-rule pl-2 space-y-0.5">
+                            {child.children.map((sub) => (
+                              <li key={`${sub.label}-${sub.href}`}>
+                                <Link
+                                  href={sub.href}
+                                  onClick={() => handleNavClick(sub.href)}
+                                  className="flex items-center py-1.5 px-3 rounded-lg hover:bg-sky-50 active:bg-sky-100 transition-colors"
+                                >
+                                  <span className="text-[0.875rem] font-medium text-ink-800">
+                                    {sub.label}
+                                  </span>
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
                       </li>
                     ))}
                   </ul>

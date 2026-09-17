@@ -1,10 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { portfolio, type PortfolioCategory } from "@/content/portfolio";
-import { FormatVessel, type VesselId } from "./FormatVessel";
 import { Logo } from "./Logo";
+
+const PRODUCT_IMAGES: Record<string, string> = {
+  vial: "/images/products/vial.png",
+  ampoule: "/images/products/ampoule.png",
+  bfs: "/images/products/bfs.png",
+  infusion: "/images/products/infusion.png",
+  anaesthetics: "/images/products/anaesthetics.png",
+  ophthalmic: "/images/products/ophthalmic.png",
+  contrast: "/images/products/contrast.png",
+};
 
 /**
  * Dosage forms that appear at the end of a product name in the workbook.
@@ -273,16 +283,17 @@ function Bay({
   onOpen: () => void;
 }) {
   const short = category.name.replace(/\s*\([^)]*\)\s*/g, " ").trim();
+  const sub = category.name.match(/\(([^)]+)\)/)?.[1] ?? "";
 
   return (
     <button
       type="button"
       onClick={onOpen}
-      className="card group relative flex overflow-hidden text-left rounded-2xl border border-powder-200 bg-white p-3.5 sm:p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+      className="card group relative flex overflow-hidden text-left rounded-2xl border border-powder-200 bg-white p-3 sm:p-4.5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-sky-200"
     >
       <span
         aria-hidden="true"
-        className="absolute inset-y-0 left-0 w-1 transition-colors duration-500 group-hover:bg-accent-500"
+        className="absolute inset-y-0 left-0 w-1.5 transition-colors duration-500 group-hover:bg-accent-500"
         style={
           isPipeline
             ? {
@@ -294,12 +305,17 @@ function Bay({
         }
       />
 
-      <span className="flex w-full flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
-        <FormatVessel
-          id={category.vessel as VesselId}
-          level={0.62}
-          className="h-12 w-9 sm:h-16 sm:w-12 shrink-0 transition-transform duration-500 group-hover:scale-105"
-        />
+      <span className="flex w-full flex-col sm:flex-row items-start sm:items-center gap-3.5 sm:gap-4.5">
+        {/* Real Product Packshot Showcase */}
+        <span className="relative flex h-20 w-16 sm:h-24 sm:w-20 shrink-0 items-center justify-center rounded-xl bg-gradient-to-b from-sky-50/70 via-slate-50/40 to-blue-50/20 p-2 border border-sky-100/70 shadow-xs transition-all duration-500 group-hover:scale-105 group-hover:border-sky-200 group-hover:shadow-sm">
+          <Image
+            src={PRODUCT_IMAGES[category.vessel] || "/images/products/vial.png"}
+            alt={`${category.name} packaging`}
+            width={120}
+            height={140}
+            className="h-full w-auto max-w-full object-contain filter drop-shadow-[0_4px_6px_rgba(0,0,0,0.08)] transition-transform duration-500 group-hover:scale-110"
+          />
+        </span>
 
         <span className="block min-w-0 flex-1">
           <span className="flex items-baseline justify-between gap-2">
@@ -311,11 +327,17 @@ function Bay({
             </span>
           </span>
 
-          <span className="mt-1 block font-display text-sm sm:text-lg leading-tight font-semibold tracking-[-0.015em] text-ink-950 transition-colors duration-300 group-hover:text-accent-600 line-clamp-1">
+          <span className="mt-1 block font-display text-base sm:text-lg leading-tight font-semibold tracking-[-0.015em] text-ink-950 transition-colors duration-300 group-hover:text-accent-600 line-clamp-1">
             {short}
           </span>
 
-          <span className="mt-1.5 flex items-center gap-1.5 text-[0.6875rem] sm:text-xs font-bold text-ink-700 transition-colors duration-300 group-hover:text-accent-600">
+          {sub && (
+            <span className="mt-0.5 block text-[0.6875rem] font-medium text-slate-500 line-clamp-1">
+              {sub}
+            </span>
+          )}
+
+          <span className="mt-2 flex items-center gap-1.5 text-[0.6875rem] sm:text-xs font-bold text-ink-700 transition-colors duration-300 group-hover:text-accent-600">
             <span>{isPipeline ? "Pipeline" : "Explore"}</span>
             <svg
               viewBox="0 0 16 16"
@@ -479,12 +501,16 @@ function CategoryOverlay({
 
           {/* Title row */}
           <div className="flex items-center justify-between gap-6 pt-3">
-            <div className="flex min-w-0 items-center gap-3">
-              <FormatVessel
-                id={category.vessel as VesselId}
-                level={0.7}
-                className="hidden h-14 w-10 shrink-0 sm:block"
-              />
+            <div className="flex min-w-0 items-center gap-4">
+              <div className="relative flex items-center justify-center shrink-0 w-14 h-16 sm:w-16 sm:h-20 rounded-xl bg-white p-2 border border-powder-200 shadow-xs">
+                <Image
+                  src={PRODUCT_IMAGES[category.vessel] || "/images/products/vial.png"}
+                  alt={`${category.name} packaging`}
+                  width={64}
+                  height={80}
+                  className="h-full w-auto object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.08)]"
+                />
+              </div>
               <div className="min-w-0">
                 <p className="spec-label">
                   {isPipeline ? "Pipeline · in development" : "Commercial · in market"}
@@ -506,13 +532,22 @@ function CategoryOverlay({
                   type="button"
                   onClick={() => onSwitch(c.id)}
                   aria-current={isCurrent}
-                  className={`flex shrink-0 items-center gap-2 rounded-full border-2 px-4 py-2 text-[0.8125rem] font-bold whitespace-nowrap transition-all duration-300 ${
+                  className={`flex shrink-0 items-center gap-2 rounded-full border-2 px-3.5 py-1.5 text-[0.8125rem] font-bold whitespace-nowrap transition-all duration-300 ${
                     isCurrent
                       ? "border-ink-950 bg-ink-950 text-white"
                       : "border-powder-300 bg-white text-ink-900 hover:-translate-y-0.5 hover:border-accent-500 hover:text-accent-700"
                   }`}
                 >
-                  {c.name.replace(/\s*\([^)]*\)\s*/g, " ").trim()}
+                  <span className="relative h-4 w-4 shrink-0 flex items-center justify-center">
+                    <Image
+                      src={PRODUCT_IMAGES[c.vessel] || "/images/products/vial.png"}
+                      alt=""
+                      width={16}
+                      height={16}
+                      className="h-full w-auto object-contain"
+                    />
+                  </span>
+                  <span>{c.name.replace(/\s*\([^)]*\)\s*/g, " ").trim()}</span>
                   <span
                     className={`numeric text-[0.6875rem] ${
                       isCurrent ? "text-white/70" : "text-ink-700"
