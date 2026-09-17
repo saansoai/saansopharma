@@ -438,10 +438,11 @@ export const navigation: readonly NavItem[] = [
   },
   {
     label: "Media",
-    href: "/#insights",
+    href: "/media",
     children: [
-      { label: "News & Updates", href: "/#insights" },
-      { label: "Blogs", href: "/#insights" },
+      { label: "On the Ground", href: "/media#gallery" },
+      { label: "News & Updates", href: "/media#insights" },
+      { label: "Blogs", href: "/media#insights" },
     ],
   },
 ];

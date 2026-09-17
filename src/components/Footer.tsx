@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
-import { company, contact, formats, navigation } from "@/content/site";
+import { company, contact, navigation } from "@/content/site";
+import { portfolio } from "@/content/portfolio";
+
 
 /** The three ways in, kept exactly as they were — presented as a register. */
 const contactActions = [
@@ -168,13 +170,23 @@ export function Footer() {
               Categories
             </h3>
             <ul className="mt-3 space-y-2">
-              {formats.map((format) => (
-                <li key={format.id}>
+              {portfolio[0].categories.map((cat) => (
+                <li key={cat.id}>
                   <Link
-                    href={`/#format-${format.id}`}
+                    href={`/?category=${cat.id}#portfolio`}
                     className="block py-0.5 text-xs sm:text-sm text-ink-700 transition-colors duration-300 hover:text-accent-600"
                   >
-                    {format.name}
+                    {cat.name}
+                  </Link>
+                </li>
+              ))}
+              {portfolio[1].categories.map((cat) => (
+                <li key={`pipeline-${cat.id}`}>
+                  <Link
+                    href={`/?category=${cat.id}#portfolio`}
+                    className="block py-0.5 text-xs sm:text-sm text-ink-600 italic transition-colors duration-300 hover:text-accent-600"
+                  >
+                    {cat.name} <span className="text-[0.6rem] not-italic font-semibold text-sky-600 uppercase">Pipeline</span>
                   </Link>
                 </li>
               ))}
