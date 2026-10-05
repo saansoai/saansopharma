@@ -1,6 +1,5 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import("next").NextConfig} */
+const nextConfig = {
   images: {
     /**
      * AVIF first, WebP as the fallback. The recovered article infographics are
